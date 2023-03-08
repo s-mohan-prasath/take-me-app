@@ -1,61 +1,56 @@
-import { View } from "react-native";
+import { View, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
 import { Text, TouchableRipple } from "react-native-paper";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { useState } from "react";
-import styles from "./styles";
-import colors from "../../config/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { COLORS, ROUTES, SETTINGS } from "../../config/index";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+//components
+
+const openModal = () => {};
+const { width, height } = Dimensions.get("screen");
+console.log(width, height);
 
 export default function NoteCard(props) {
-  const iconSize = 24;
-
-  let [pinned, setPinned] = useState(props.pinned);
-  const [liked, setLiked] = React.useState(false);
-  const openModal = () =>{
-
+  const navigation = useNavigation();
+  const styles = StyleSheet.create({
+    card_view: { marginRight: "1%", marginBottom: "1%", width: "100%" },
+    grid_view: { padding: "1%", width: "49%" },
+    card_container: {
+      Width: "48%",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+      borderRadius: SETTINGS.CARD_BORDER_RADIUS,
+      borderLeftWidth: 5,
+    },
+    card_body: {
+      width: "100%",
+      backgroundColor: "#d4d4d4",
+      borderTopRightRadius: SETTINGS.CARD_BORDER_RADIUS,
+      borderBottomRightRadius: SETTINGS.CARD_BORDER_RADIUS,
+      padding: 10,
+    },
+    card_title: {
+      fontWeight: "700",
+      fontSize: 15,
+    },
+  });
+  const click =()=>{
+    navigation.navigate(ROUTES.NOTE_MODAL,{note_title:props.title,note_content:props.content});
   }
-
   return (
     <>
-      <View style={[styles["cardcontainer"]]}>
-        <View style={[styles["header"], { backgroundColor: colors.black }]}>
-          <>
-            {pinned && (
-              <MaterialCommunityIcons
-                name="pin"
-                size={iconSize}
-                color="white"
-              />
-            )}
-            <Text
-              style={[styles["title"], { color: "white" }]}
-              numberOfLines={1}
-            >
-              {props.name}
-            </Text>
-          </>
-          <MaterialCommunityIcons
-            name={liked ? "cards-heart" : "cards-heart-outline"}
-            color="red"
-            size={iconSize}
-            onPress={()=>setLiked(!liked)}
-          />
+      <TouchableWithoutFeedback onPress={click}>
+        <View style={[props.view === "grid" ? styles.grid_view : styles.card_view,props.active && styles.card_active]}>
+          <TouchableOpacity style={styles.card_container} activeOpacity={0.5}>
+            <View style={[{ padding: "5%" }, styles.card_body]}>
+              <Text numberOfLines={5}><Text style={styles.card_title}>{props.title}</Text>{'\n'}{props.content}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        <TouchableRipple
-          onPress={openModal}
-          rippleColor="rgba(0, 0, 0, .32)"
-          style={[styles["content-container"], { backgroundColor: colors.white,elevation:10}]}
-        >
-          <Text style={[styles.content, {}]} numberOfLines={5}>
-            {props.content}
-          </Text>
-        </TouchableRipple>
-        <View style={[styles["footer"], { backgroundColor: "black" }]}>
-          <Text style={[styles["lastModified"], { color: "white" }]}>
-            Last Modified on {props.lastModified || " "}
-          </Text>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }

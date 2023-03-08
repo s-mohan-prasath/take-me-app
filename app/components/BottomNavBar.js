@@ -7,14 +7,13 @@ import {
 } from "react-native-paper";
 
 import { StyleSheet } from "react-native";
-import styles from "../styles";
 
 //components
-import HomeScreen from "../screens/HomeScreen";
+import NoteNavBar from "./NoteNavBar";
 import IdeaScreen from "../screens/IdeaScreen";
 
 //configs
-import colors from "../config/colors";
+import {COLORS} from "../config/index";
 
 const BottomNavBar = () => {
   const [index, setIndex] = React.useState(0);
@@ -34,7 +33,7 @@ const BottomNavBar = () => {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    home: HomeScreen,
+    home: NoteNavBar,
     profile: IdeaScreen,
   });
 
@@ -46,10 +45,10 @@ const BottomNavBar = () => {
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
         renderScene={renderScene}
-        barStyle={[{ backgroundColor: colors.secondary }]}
+        barStyle={[{ backgroundColor: COLORS.secondary }]}
         style={{elevation:20}}
-        activeColor={colors.primary}
-        inactiveColor={colors.black}
+        activeColor={COLORS.primary}
+        inactiveColor={COLORS.black}
         sceneAnimationEnabled={true}
         sceneAnimationType="shifting"
       />
@@ -58,3 +57,11 @@ const BottomNavBar = () => {
 };
 
 export default BottomNavBar;
+const styles = StyleSheet.create({
+  "bottom-nav-bar": {
+    backgroundColor: "blue",
+    height: 56,
+    justifyContent: "center",
+    elevation: 8,
+  },
+})

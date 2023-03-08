@@ -6,7 +6,7 @@ let slice = createSlice({
   initialState: {},
   reducers: {
     notebookAdded: (notebooks, action) => {
-      notebooks[action.id] = {
+      notebooks[action.payload.id] = {
         name: action.payload.name,
         desc: action.payload.desc,
         tagList: action.payload.tagList,

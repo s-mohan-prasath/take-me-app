@@ -7,12 +7,24 @@ let slice = createSlice({
   reducers: {
     noteAdded: (notes, action) => {
       notes[action.payload.id] = {
+        id:action.payload.id,
         name: action.payload.name,
         content: action.payload.content,
         lastModified: action.payload.lastModified,
+        starred: action.payload.starred,
+      };
+    },
+    noteStarred: (notes, action) => {
+      notes[action.payload.id] = { ...notes[action.payload.id], starred: true };
+
+    },
+    noteUnStarred: (notes, action) => {
+      notes[action.payload.id] = {
+        ...notes[action.payload.id],
+        starred: false,
       };
     },
   },
 });
-export const { noteAdded } = slice.actions;
+export const { noteAdded, noteStarred, noteUnStarred } = slice.actions;
 export default slice.reducer;

@@ -1,0 +1,13 @@
+export default{
+    ICON_NORMAL_SIZE:24,
+    ICON_MEDIUM_SIZE:32,
+    ICON_LARGE_SIZE:100,
+    
+    //CARD
+    CARD_BORDER_RADIUS:5,
+    CARD_GRID_WIDTH:'45%',
+    CARD_NORMAL_WIDTH:'100%',
+
+    //TEXT
+    TEXT_TITLE_NOTES:22
+}

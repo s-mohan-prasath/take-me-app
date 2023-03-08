@@ -6,7 +6,7 @@ let slice = createSlice({
   initialState: state,
   reducers: {
     notebookListAdd: (notebookList, action) => {
-      notebookList.push(action.payload.id);
+      notebookList.push({id:action.payload.id,name:action.payload.name});
     },
   },
 });
